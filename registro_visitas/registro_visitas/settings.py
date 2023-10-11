@@ -26,7 +26,7 @@ SECRET_KEY = 'es1o468k!nj^0z@(qvh^t@u52&=g(sgr7aso4th7s7$n#gcsbu'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'Cliente',
     'Region',
     'Comuna',
-    'Empleado',
     'Visita',
     'rest_framework',
+    'drf_yasg',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,12 +84,11 @@ WSGI_APPLICATION = 'registro_visitas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ForceMentaldbs',
-        'USER': 'root',
-        'PASSWORD': 'Bjj2325fmDios..M',
-        'HOST': '127.0.0.1',
+        'NAME': 'usuario',
+        'USER': 'proyecto',
+        'PASSWORD': '123456',
+        'HOST': '34.199.25.249',
         'PORT': '3306',
-        'OPTION': "SET sql_mode='STRICT_TRANS_TABLES'"
     }
 }
 

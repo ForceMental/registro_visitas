@@ -14,23 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Cliente.views import ClienteListView, ClienteDetailView
-from Region.views import RegionListView, RegionDetailView
-from Comuna.views import ComunaListView, ComunaDetailView
-from Empleado.views import EmpleadoListView, EmpleadoDetailView
-from Visita.views import VisitaListView, VisitaDetailView
+from django.urls import path, re_path, include
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Tu API",
+        default_version='v1',
+        description="Descripción de tu API",
+        terms_of_service="https://www.tu-tos.com/",
+        contact=openapi.Contact(email="contacto@tudominio.com"),
+        license=openapi.License(name="Tu Licencia"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('clientes/', ClienteListView.as_view(), name='clientes-list'),
-    path('clientes/<int:pk>/', ClienteDetailView.as_view(), name='cliente-detail'),
-    path('comunas/', ComunaListView.as_view(), name='comuna-list'),
-    path('comunas/<int:pk>/', ComunaDetailView.as_view(), name='comuna-detail'),
-    path('regiones/', RegionListView.as_view(), name='region-list'),
-    path('regiones/<int:pk>/', RegionDetailView.as_view(), name='region-detail'),
-    path('empleados/', EmpleadoListView.as_view(), name='empleado-list'),
-    path('empleados/<int:pk>/',EmpleadoDetailView.as_view(), name='empleado-detail'),
-    path('visitas/', VisitaListView.as_view(), name='visita-list'),
-    path('visitas/<int:pk>/', VisitaDetailView.as_view(), name='visita-detail'),
+    path('api/', include('Cliente.urls')),
+    path('api/', include('Visita.urls')),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
 ]
