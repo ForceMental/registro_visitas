@@ -2,18 +2,21 @@ from rest_framework import serializers, exceptions
 from .models import Visita
 from Cliente.models import Cliente
 from Cliente.serializers import ClienteVisitaFrioSerializer  
-from Comuna.serializers import ComunaSerializer
-from Region.serializers import RegionSerializer
 
+class CustomDateField(serializers.DateField):
+    def to_representation(self, value):
+        
+        return value.strftime('%d/%m/%Y')
+    
 class VisitaSerializer(serializers.ModelSerializer):
     cliente = ClienteVisitaFrioSerializer(read_only=True)
     cliente_id = serializers.IntegerField(write_only=True)
     empleado_id = serializers.IntegerField(write_only=True)
-
+    fecha_visita = CustomDateField()
 
     class Meta:
         model = Visita
-        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id']
+        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id', 'fecha_visita']
         
         
 

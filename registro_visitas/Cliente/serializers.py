@@ -8,7 +8,7 @@ class ClienteSerializer(serializers.ModelSerializer):
     region = serializers.PrimaryKeyRelatedField(source='comuna.region', queryset=Region.objects.all(), required=True)
     class Meta:
         model = Cliente
-        fields = ['nombre', 'apellido', 'telefono', 'correo_electronico', 'direccion','rut', 'comuna', 'region']
+        fields = ['id','nombre', 'apellido', 'telefono', 'correo_electronico', 'direccion','rut', 'comuna', 'region']
 
 class ClienteVisitaFrioSerializer(serializers.ModelSerializer):
     comuna = serializers.PrimaryKeyRelatedField(queryset=Comuna.objects.all(), required=True)
