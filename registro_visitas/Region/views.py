@@ -2,6 +2,11 @@ from rest_framework import generics
 from .models import Region
 from .serializers import RegionSerializer
 
+class RegionCreateView(generics.CreateAPIView):
+    queryset = Region.objects.all()
+    serializer_class = RegionSerializer
+
+
 class RegionListView(generics.ListCreateAPIView):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
