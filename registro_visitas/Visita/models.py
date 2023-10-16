@@ -10,7 +10,7 @@ class Visita(models.Model):
 
     tipo_visita = models.CharField(max_length=1, choices=TIPOS_VISITA, default='F')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    empleado_id = models.CharField(max_length=255, default='')  # O el valor máximo deseado
+    empleado_id = models.CharField(max_length=255, default='') 
     empleado_nombre = models.CharField(max_length=255)
     fecha_visita = models.DateTimeField(default=timezone.now)
 

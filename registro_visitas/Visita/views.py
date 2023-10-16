@@ -16,13 +16,13 @@ class VisitaListViewDate(generics.ListAPIView):
         
         if fecha_str:
             try:
-                # Analiza la fecha desde la URL en el formato "DD-MM-YYYY"
+
                 fecha = datetime.strptime(fecha_str, '%d-%m-%Y')
                 
                 # Filtra las visitas por la fecha
                 return Visita.objects.filter(fecha_visita__date=fecha)
             except ValueError:
-                pass  # Manejar errores de formato de fecha aquí si es necesario
+                pass  
         
         return Visita.objects.none()  
 
