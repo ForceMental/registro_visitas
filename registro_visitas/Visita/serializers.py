@@ -14,13 +14,15 @@ class VisitaSerializer(serializers.ModelSerializer):
     cliente_id = serializers.IntegerField(write_only=True)
     empleado_id = serializers.IntegerField()
     fecha_visita = CustomDateField()
+    reprogramada = serializers.BooleanField(required=False)  # no es necesario al crear, por defecto es False
+    contador_reprogramaciones = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Visita
-        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id', 'fecha_visita']
+        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id', 'fecha_visita', 'reprogramada', 'contador_reprogramaciones', 'finalizada']
 
         extra_kwargs = {
-            'empleado_id': {'read_only': True}
+            'empleado_id': {'read_only': True},
         }
         
         
@@ -42,3 +44,4 @@ def create(self, validated_data):
 
     
     return super(VisitaSerializer, self).create(validated_data)
+
