@@ -19,7 +19,7 @@ class VisitaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visita
-        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id', 'fecha_visita', 'reprogramada', 'contador_reprogramaciones', 'finalizada']
+        fields = ['id', 'tipo_visita', 'cliente', 'cliente_id', 'empleado_id', 'fecha_visita', 'reprogramada', 'contador_reprogramaciones', 'finalizada', 'cancelada']
 
         extra_kwargs = {
             'empleado_id': {'read_only': True},

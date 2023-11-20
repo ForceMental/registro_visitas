@@ -29,7 +29,7 @@ class ClienteUpdateView(generics.UpdateAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteCreateSerializer
     lookup_field = 'pk'  # o cualquier campo que utilices como clave única
-    print(lookup_field)
+   
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
