@@ -16,8 +16,17 @@ class Visita(models.Model):
     reprogramada = models.BooleanField(default=False)  # Indica si la visita ha sido reprogramada
     contador_reprogramaciones = models.IntegerField(default=0)
     finalizada = models.BooleanField(default=False)
+    cancelada = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.get_tipo_visita_display()} - {self.cliente}"
+    
+    def finalizar(self):
+        self.finalizada = True
+        self.save(update_fields=['finalizada'])
+
+    def cancelar(self):
+        self.cancelada = True
+        self.save(update_fields=['cancelada'])
     
 

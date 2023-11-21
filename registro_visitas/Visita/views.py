@@ -4,7 +4,7 @@ from datetime import datetime
 from rest_framework.response import Response
 from django.utils.dateparse import parse_datetime
 from django.utils import timezone
-
+from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import generics
 from .models import Visita
@@ -80,3 +80,26 @@ class VisitaListView(generics.ListCreateAPIView):
 class VisitaDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Visita.objects.all()
     serializer_class = VisitaSerializer
+
+
+@api_view(['POST'])
+def finalizar_visita(request, pk):
+    visita = get_object_or_404(Visita, pk=pk)
+    if visita.cancelada:
+        return Response({'status': 'error', 'message': 'La visita está cancelada y no puede finalizarse.'}, status=status.HTTP_400_BAD_REQUEST)
+    if not visita.finalizada:
+        visita.finalizar()
+        return Response({'status': 'success', 'message': 'Visita finalizada con éxito.'})
+    else:
+        return Response({'status': 'error', 'message': 'La visita ya había sido finalizada.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def cancelar_visita(request, pk):
+    visita = get_object_or_404(Visita, pk=pk)
+    if visita.finalizada:
+        return Response({'status': 'error', 'message': 'La visita está finalizada y no puede cancelarse.'}, status=status.HTTP_400_BAD_REQUEST)
+    if not visita.cancelada:
+        visita.cancelar()
+        return Response({'status': 'success', 'message': 'Visita cancelada con éxito.'})
+    else:
+        return Response({'status': 'error', 'message': 'La visita ya había sido cancelada.'}, status=status.HTTP_400_BAD_REQUEST)
